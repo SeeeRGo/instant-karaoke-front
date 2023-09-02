@@ -18,7 +18,7 @@ export default function Home() {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Easy <span className="text-[hsl(280,100%,70%)]">Karaoke</span> Maker
           </h1>
-          <div className="container flex flex-row items-center justify-between gap-12 px-4 py-16 ">
+          <div className="container flex flex-col items-center justify-between gap-12 px-4 py-16 ">
             <video src="https://wkvsvhqxfoamibzzcrco.supabase.co/storage/v1/object/public/file_queue/Kitty%20In%20A%20Casket%20-%20Cold%20Black%20Heart.mp4" controls={true} />
             <Timeline />
           </div>
