@@ -8,3 +8,10 @@ export interface TranscriptEntry {
 export interface SegmentEntry extends TranscriptEntry {
   words: TranscriptEntry[]
 }
+
+export interface Songs {
+  id: string
+  name: string
+  artist: string
+  link: string
+}
