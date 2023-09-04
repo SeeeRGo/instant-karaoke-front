@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { Table } from "~/components/Table";
 import { Timeline } from "~/components/Timeline";
 
@@ -6,6 +7,7 @@ import { api } from "~/utils/api";
 
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { push } = useRouter();
 
   return (
     <>
@@ -18,6 +20,11 @@ export default function Home() {
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Easy <span className="text-[hsl(280,100%,70%)]">Karaoke</span> Maker
         </h1>
+        <button onClick={() => {
+          void push('/upload')
+        }} className="rounded-lg bg-blue-500 px-4 py-2 text-blue-100 duration-300 hover:bg-blue-600">
+          Create video
+        </button>
         <Table />
       </div>
     </>

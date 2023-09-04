@@ -14,4 +14,5 @@ export interface Songs {
   name: string
   artist: string
   link: string
+  editLink: string
 }

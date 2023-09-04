@@ -10,6 +10,7 @@ export const fetchSongsFx = createEffect(async () => {
     name,
     artist,
     link,
+    editLink: edit_link
   })) ?? []
 })
 

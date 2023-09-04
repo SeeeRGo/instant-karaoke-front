@@ -19,7 +19,7 @@ export const Timeline = ({ segments }: IProps) => {
 
   useEffect(() => {
     void supabase.from("songs").select().eq('id', query.id).single().then(
-      ({ data }) => setTimeline(data?.timeline?.segments.map(({ words, start, end, text }) => ({
+      ({ data }) => setTimeline(data?.timeline?.map(({ words, start, end, text }) => ({
         id: nanoid(),
         start,
         end,
@@ -33,8 +33,6 @@ export const Timeline = ({ segments }: IProps) => {
       })) ?? [])
     )
   }, [])
-
-  // console.log('timeline', timeline?.timeline ?? '');
   
   return (
     <div className="flex w-full flex-row overflow-auto">
