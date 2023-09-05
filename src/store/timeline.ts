@@ -1,9 +1,13 @@
 import { createEvent, createStore } from "effector";
 import { nanoid } from "nanoid";
 import type { SegmentEntry, TranscriptEntry } from "~/types";
-import { createSegmentFromWords, replaceSegment } from "~/utils/timeline";
+import { adjustLaterWordsInSegment, createSegmentFromWords, replaceSegment } from "~/utils/timeline";
 
 export const editWord = createEvent<{
+  segmentId: SegmentEntry["id"];
+  word: TranscriptEntry;
+}>();
+export const editWordEnd = createEvent<{
   segmentId: SegmentEntry["id"];
   word: TranscriptEntry;
 }>();
@@ -33,6 +37,28 @@ export const $editedTimeline = createStore<SegmentEntry[]>([])
             ...createSegmentFromWords(rest.words.map((oldWord) => oldWord.id === word.id ? word : oldWord),
             ),
           }
+          : { id, ...rest };
+      },
+    ),
+  )
+  .on(editWordEnd, (timeline, { segmentId, word }) =>
+    timeline.map(({ id, ...rest }) =>
+      {
+        const newEnd = word.end
+        const oldEnd =
+          rest.words.find((oldWord) => oldWord.id === word.id)?.end ?? word.end;
+        const shift = newEnd - oldEnd
+        console.log();
+        
+        return segmentId === id
+          ? {
+              id,
+              ...adjustLaterWordsInSegment(
+                rest.words.map((oldWord) =>
+                  oldWord.id === word.id ? word : oldWord,
+                ), word.id, shift
+              ),
+            }
           : { id, ...rest };
       },
     ),

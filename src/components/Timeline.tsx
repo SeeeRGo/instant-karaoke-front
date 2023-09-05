@@ -18,20 +18,25 @@ export const Timeline = ({ segments }: IProps) => {
   const { query } = useRouter()
 
   useEffect(() => {
-    void supabase.from("songs").select().eq('id', query.id).single().then(
-      ({ data }) => setTimeline(data?.timeline?.map(({ words, start, end, text }) => ({
-        id: nanoid(),
-        start,
-        end,
-        text,
-        words: words.map(({ start, end, word }) => ({
-          id: nanoid(),
-          start,
-          end,
-          text: word,
-        }))
-      })) ?? [])
-    )
+    void supabase
+      .from("songs")
+      .select()
+      .eq("id", query.id)
+      .single()
+      .then(({ data }) =>
+        setTimeline(
+          data?.timeline?.map(({ id, words, start, end, text }) => ({
+            id: id ?? nanoid(),
+            start,
+            end,
+            text,
+            words: words.map(({ id: wordId, ...rest }) => ({
+              id: wordId ?? nanoid(),
+              ...rest,
+            })),
+          })) ?? [],
+        ),
+      );
   }, [])
   
   return (

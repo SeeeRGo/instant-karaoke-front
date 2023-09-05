@@ -99,3 +99,28 @@ export const createSegmentFromWords = (words: TranscriptEntry[]): Omit<SegmentEn
   end: words.at(-1)?.end ?? 0,
   text: words.reduce((text, word) => `${text} ${word.text}`, '')
 })
+
+export const adjustLaterWordsInSegment = (words: TranscriptEntry[], id: TranscriptEntry['id'], shift: number): Omit<SegmentEntry, 'id'> => {
+  const indexChanged = words.findIndex(word => word.id === id)
+  if (indexChanged === -1) {
+    return ({
+      words: words,
+      start: words.at(0)?.start ?? 0,
+      end: words.at(-1)?.end ?? 0,
+      text: words.reduce((text, word) => `${text} ${word.text}`, '')
+    });  
+  }
+  const stablePart = words.slice(0, indexChanged + 1)
+  const updatedPart = words.slice(indexChanged + 1).map(({ start, end, ...rest }) => ({
+    ...rest,
+    start: start + shift,
+    end: end + shift,
+  }))
+  const res = stablePart.concat(updatedPart)
+  return {
+    words: res,
+    start: words.at(0)?.start ?? 0,
+    end: res.at(-1)?.end ?? 0,
+    text: words.reduce((text, word) => `${text} ${word.text}`, ""),
+  };
+}

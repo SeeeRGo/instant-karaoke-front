@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import type { SegmentEntry } from "~/types";
 import { Card } from "./Card";
-import { addSegment, addWord, deleteSegment, deleteWord, editSegmentDuration, editSegmentText, editWord } from "~/store/timeline";
+import { addSegment, addWord, deleteSegment, deleteWord, editSegmentDuration, editSegmentText, editWord, editWordEnd } from "~/store/timeline";
 
 export const Segment = ({ start, end, text, words, id }: SegmentEntry) => {
   const [showWords, setShowWords] = useState(false);
@@ -56,7 +56,7 @@ export const Segment = ({ start, end, text, words, id }: SegmentEntry) => {
                 })
               }
               onEditEnd={(val) =>
-                editWord({
+                editWordEnd({
                   segmentId: id,
                   word: {
                     ...word,

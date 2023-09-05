@@ -5,6 +5,7 @@ import { Switch } from '~/components/Switch';
 import { Timeline } from '~/components/Timeline';
 import { $songs } from '~/store/songs';
 import { $editedTimeline } from '~/store/timeline';
+import { supabase } from '~/utils/db';
 
 export default function Video() {
   const songs = useStore($songs)
@@ -33,6 +34,8 @@ export default function Video() {
         <button
           className="rounded-lg bg-gray-600 px-4 py-2 text-gray-100 duration-300 hover:bg-gray-700"
           onClick={() => {
+            console.log('timeline', timeline);
+            
             void fetch("http://127.0.0.1:5000/file-rerender", {
               method: "POST",
               headers: {
@@ -65,6 +68,14 @@ export default function Video() {
           }}
         >
           Render video with edited timeline
+        </button>
+        <button
+          className="rounded-lg bg-gray-600 px-4 py-2 text-gray-100 duration-300 hover:bg-gray-700"
+          onClick={() => {
+            void supabase.from('songs').update({ timeline }).eq('id', query.id)
+          }}
+        >
+          Save timeline
         </button>
       </div>
       <Timeline />
