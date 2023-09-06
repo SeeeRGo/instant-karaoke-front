@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { apiUrl } from '~/constants'
 
 export default function Upload() {
   const [file, setFile] = useState()
@@ -60,7 +61,7 @@ export default function Upload() {
           formData.append('lyrics', lyrics)
           formData.append('name', name)
           formData.append('artist', artist)
-          void fetch("http://127.0.0.1:5000/file-upload", {
+          void fetch(`${apiUrl}/file-upload`, {
             method: "POST",
             body: formData,
           });

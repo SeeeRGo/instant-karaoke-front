@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { Switch } from '~/components/Switch';
 import { Timeline } from '~/components/Timeline';
+import { apiUrl } from '~/constants';
 import { $songs } from '~/store/songs';
 import { $editedTimeline } from '~/store/timeline';
 import { supabase } from '~/utils/db';
@@ -36,7 +37,7 @@ export default function Video() {
           onClick={() => {
             console.log('timeline', timeline);
             
-            void fetch("http://127.0.0.1:5000/file-rerender", {
+            void fetch(`${apiUrl}/file-rerender`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json; charset=utf-8",
