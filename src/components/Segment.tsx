@@ -10,6 +10,7 @@ export const Segment = ({ start, end, text, words, id }: SegmentEntry) => {
       <button onClick={() => setShowWords((val) => !val)}>Show words</button>
       <Card
         start={start}
+        id={id}
         end={end}
         text={text}
         onAdd={() => addSegment({ prevSegmentId: id })}

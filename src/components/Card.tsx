@@ -28,12 +28,12 @@ export const Card = ({
       <input
         type="number"
         value={start}
-        onChange={(ev) => onEditStart(ev.target.value)}
+        onChange={(ev) => onEditStart(parseFloat(ev.target.value))}
       />
       <input
         type="number"
         value={end}
-        onChange={(ev) => onEditEnd(ev.target.value)}
+        onChange={(ev) => onEditEnd(parseFloat(ev.target.value))}
       />
       <input value={text} onChange={(ev) => onEditText(ev.target.value)} />
     </div>

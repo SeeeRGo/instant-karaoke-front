@@ -9,11 +9,7 @@ import { useRouter } from 'next/router'
 
 // Create a single supabase client for interacting with your database
 
-interface IProps {
-  segments: SegmentEntry[]
-}
-
-export const Timeline = ({ segments }: IProps) => {
+export const Timeline = () => {
   const timeline = useStore($editedTimeline);
   const { query } = useRouter()
 
@@ -23,7 +19,7 @@ export const Timeline = ({ segments }: IProps) => {
       .select()
       .eq("id", query.id)
       .single()
-      .then(({ data }) =>
+      .then(({ data }: { data: { timeline: SegmentEntry[] } | null}) =>
         setTimeline(
           data?.timeline?.map(({ id, words, start, end, text }) => ({
             id: id ?? nanoid(),
@@ -37,7 +33,7 @@ export const Timeline = ({ segments }: IProps) => {
           })) ?? [],
         ),
       );
-  }, [])
+  }, [query.id])
   
   return (
     <div className="flex w-full flex-row overflow-auto">

@@ -36,11 +36,12 @@ export const replaceSegment = (words: TranscriptEntry[], newText: string) => {
   const newLength = newWords.length
   const totalDuration = words.reduce((acc, word) => acc + word.end - word.start, 0)
   if (initalStart === undefined) return newWords.map(word => ({
+    id: nanoid(),
     text: word,
     start: 0,
     end: 0,
   }))
-  if (!newLength) return [{text: '', start: initalStart, end: lastEnd ?? totalDuration }]
+  if (!newLength) return [{id: nanoid(), text: '', start: initalStart, end: lastEnd ?? totalDuration }]
 
   const lenAdjustment = newLength / words.length
   const pauses = []
