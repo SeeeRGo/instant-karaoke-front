@@ -11,7 +11,7 @@ services:
       NODE_ENV: production
   back:
     image: cr.yandex/crpcpttpmpk9gvquafuh/karaoke-maker:0.5.6 
-    command: gunicorn --bind 0.0.0.0:5000 app:app
+    command: flask run --host=0.0.0.0
     ports:
       - "5000:5000"
     env_file:
