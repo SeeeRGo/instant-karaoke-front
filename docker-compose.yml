@@ -10,7 +10,7 @@ services:
     environment:
       NODE_ENV: production
   back:
-    image: cr.yandex/crpcpttpmpk9gvquafuh/karaoke-maker:0.5.6 
+    image: cr.yandex/crpcpttpmpk9gvquafuh/karaoke-maker:0.5.9
     command: flask run --host=0.0.0.0
     mem_limit: 24g
     ports:
