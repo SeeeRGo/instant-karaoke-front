@@ -12,6 +12,7 @@ services:
   back:
     image: cr.yandex/crpcpttpmpk9gvquafuh/karaoke-maker:0.5.6 
     command: flask run --host=0.0.0.0
+    mem_limit: 24g
     ports:
       - "5000:5000"
     env_file:
