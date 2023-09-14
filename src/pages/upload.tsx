@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { apiUrl } from '~/constants'
 
@@ -6,7 +7,8 @@ export default function Upload() {
   const [lyrics, setLyrics] = useState('')
   const [name, setName] = useState('')
   const [artist, setArtist] = useState('')
-  return (
+  const [loadingState, setLoadingState] = useState('idle')
+  return loadingState === 'idle' ? (
     <div className="bg-grey-lighter flex h-screen w-full flex-col items-center justify-start">
       <label className="text-blue border-blue hover:bg-blue flex w-64 cursor-pointer flex-col items-center rounded-lg border bg-white px-4 py-6 uppercase tracking-wide shadow-lg hover:text-white">
         <svg
@@ -59,7 +61,8 @@ export default function Upload() {
       </textarea>
       <button
         onClick={() => {
-          if (file) {
+          if (file && loadingState === 'idle') {
+            setLoadingState('loading')
             const formData = new FormData();
             formData.append('file', file)
             formData.append('lyrics', lyrics)
@@ -68,7 +71,7 @@ export default function Upload() {
             void fetch(`${apiUrl}/file-upload`, {
               method: "POST",
               body: formData,
-            });
+            }).then(() => setLoadingState('success')).catch(() => setLoadingState('error'));
           }
         }}
         className="rounded-lg bg-blue-500 px-4 py-2 text-blue-100 duration-300 hover:bg-blue-600"
@@ -76,5 +79,5 @@ export default function Upload() {
         Create video
       </button>
     </div>
-  );
+  ) : loadingState === 'loading' ? <div>Song is Loading and processing wait about 30 minutes</div> : loadingState === 'success' ? <Link href='/'>Upload successful go to main page</Link> : <Link href='/'>Something went wrong go to main page</Link>;
 }
